@@ -212,22 +212,23 @@ function placeLego(intersect, cb) {
 
     // If the piece can't be placed on another, I don't want it to create and add the modelObj to the scene
     if (placementPossible) {
+
+    /**POSITIONAL SNAPPING FOR LEGO PLACEMENTS*/
+        let bSize = size;
+        let x = modelObj.position.x;
+        let y = modelObj.position.y;
+        if((x % bSize) < (.5*bSize)){
+            modelObj.position.x = x-(x%bSize);
+        }
+        else if((x % bSize) > (.5*bSize)){
+            modelObj.position.x = x+(bSize-x%bSize);
+        }
+        /**end of positional snapping algorithm*/
+
       generateCollisionCube(modelObj, size);
     }
 
     cb(placementPossible);
-
-    /**POSITIONAL SNAPPING FOR LEGO PLACEMENTS*/
-    let bSize = size;
-    let x = modelObj.position.x;
-    let y = modelObj.position.y;
-    if((x % bSize) < (.5*bSize)){
-        modelObj.position.x = x-(x%bSize);
-    }
-    else if((x % bSize) > (.5*bSize)){
-        modelObj.position.x = x+(bSize-x%bSize);
-    }
-    /**end of positional snapping algorithm*/
   });
 }
 
